@@ -17,6 +17,8 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5dp"
+
         android:id="@+id/tvUserName"
         android:layout_alignBottom="@+id/ivUserImage"
         android:layout_toRightOf="@+id/ivUserImage"

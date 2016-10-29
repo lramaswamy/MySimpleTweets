@@ -148,8 +148,6 @@ public class Tweet {
 
     private String createdAt;
 
-    String relativeDate;
-
     public Tweet() {}
 
     //Read the JSON array and deserialize it
@@ -163,8 +161,6 @@ public class Tweet {
             tweet.createdAt = tweet.getRelativeTimeAgo(jsonObject.getString("created_at"));
             tweet.retweets = jsonObject.getInt("retweet_count");
             //tweet.favorites = jsonObject.getInt("favourites_count");
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -196,16 +192,13 @@ public class Tweet {
 
         try {
             long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+            createdAt = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return relativeDate;
+        return createdAt;
     }
 
-    public String getRelativeTime() {
-        return relativeDate;
-    }
 }

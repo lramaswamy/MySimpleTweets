@@ -93,5 +93,14 @@
         android:layout_toEndOf="@+id/imFav"
         android:id="@+id/tvFavorite" />
 
+    <TextView
+        android:text="Billy Bob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/tvUserName"
+        android:layout_alignEnd="@+id/tvUserName"
+        android:id="@+id/tvScreenName" />
+
 
 </RelativeLayout>

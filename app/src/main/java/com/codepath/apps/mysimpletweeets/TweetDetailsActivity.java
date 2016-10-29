@@ -33,20 +33,29 @@ public class TweetDetailsActivity extends AppCompatActivity{
     private void populateView(Tweet tweet) {
         ImageView imageViewRetweet = (ImageView) findViewById(R.id.imageRetweet) ;
         imageViewRetweet.setImageResource(R.drawable.twitter_retweet);
+
         TextView tvRetweetCount = (TextView) findViewById(R.id.tvRetweets);
         tvRetweetCount.setText(Integer.toString(tweet.getRetweets()));
+
         TextView favoriteCount = (TextView) findViewById(R.id.tvFavorite);
         favoriteCount.setText(Integer.toString(tweet.getFavorites()));
+
         TextView tvRelativeTime = (TextView) findViewById(R.id.tvRelativeTime);
-        tvRelativeTime.setText(tweet.getRelativeTime());
+        tvRelativeTime.setText(tweet.getCreatedAt());
+
         ImageView imageView = (ImageView) findViewById(R.id.ivProfileImage);
         Glide.with(this)
                 .load(tweet.getUser().getProfileImageUrl())
                 .into(imageView);
+
         TextView tvUserName = (TextView) findViewById(R.id.tvUserName);
         tvUserName.setText(tweet.getUser().getName());
+
         LinkifiedTextView tvTweetBody = (LinkifiedTextView) findViewById(R.id.tvTweetBody);
         tvTweetBody.setText(tweet.getBody());
+
+        TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvScreenName.setText(tweet.getUser().getScreenName());
     }
 
 

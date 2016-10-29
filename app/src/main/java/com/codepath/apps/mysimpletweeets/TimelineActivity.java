@@ -43,10 +43,10 @@ public class TimelineActivity extends AppCompatActivity implements TweetCompose.
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.drawable.twitter);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.twitter);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         tweets = new ArrayList<>();
 
@@ -58,35 +58,50 @@ public class TimelineActivity extends AppCompatActivity implements TweetCompose.
         linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
 
-//        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//               // populateTimeline(0, TOTAL_ITEMS_COUNT);
-//            }
-//        });
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getTweetsSince();
+            }
+        });
         client = (TwitterClient)TwitterClient.getInstance(TwitterClient.class, this.getApplicationContext());
-        populateTimeline(0, TOTAL_ITEMS_COUNT);
+        populateTimeline(1, -1, TOTAL_ITEMS_COUNT);
         rvScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline(page, totalItemsCount);
+                getTweetsBeyond();
+                //populateTimeline(1, -1, TOTAL_ITEMS_COUNT);
+
             }
         };
 
         rvTweets.addOnScrollListener(rvScrollListener);
     }
 
+    private void getTweetsSince() {
+        long sinceID = tweets.get(0).getUid();
+        populateTimeline(sinceID, -1, TOTAL_ITEMS_COUNT);
+    }
+
+    private void getTweetsBeyond() {
+        long maxID = tweets.get(tweets.size() - 1).getUid();
+        populateTimeline(-1, maxID, TOTAL_ITEMS_COUNT);
+    }
+
     //Sends an API request to get the timeline JSON
     //Fill in the listview by creating the individual tweet objects from the big JSON
-    private void populateTimeline(int pageNumber, int totalItemsCount) {
-        client.getHomeTimeline(pageNumber, totalItemsCount, new JsonHttpResponseHandler() {
+    private void populateTimeline(final long sinceID, final long maxID, int totalItemsCount) {
+        client.getHomeTimeline(sinceID, maxID, totalItemsCount, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 List<Tweet> moreTweets = Tweet.fromJSONArray(json);
-                tweets.addAll(moreTweets);
+                if(sinceID != -1)
+                    tweets.addAll(0, moreTweets);
+                if(maxID != -1)
+                    tweets.addAll(tweets.size(), moreTweets);
                 adapter.notifyDataSetChanged();
-                //swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -131,8 +146,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetCompose.
         client.postTweet(composedTweet, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                populateTimeline(0, 25);
+                getTweetsSince();
             }
         });
 
