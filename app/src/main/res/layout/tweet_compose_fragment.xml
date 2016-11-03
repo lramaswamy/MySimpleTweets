@@ -6,39 +6,14 @@
     android:layout_height="match_parent">
 
 
-    <ImageButton
+    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:padding="5dp"
         app:srcCompat="@drawable/ic_launcher"
-        android:id="@+id/ivUserImage" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-
-        android:id="@+id/tvUserName"
-        android:layout_alignBottom="@+id/ivUserImage"
-        android:layout_toRightOf="@+id/ivUserImage"
-        android:layout_toEndOf="@+id/ivUserImage"
-        android:layout_marginLeft="10dp"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        tools:text="Name"
-        android:ems="10"
-        android:linksClickable="true"
-        android:autoLink="all"
-        android:padding="15dp"
-        android:id="@+id/etTweet"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/ivUserImage"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="28dp" />
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -46,11 +21,9 @@
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
         android:layout_alignBottom="@+id/sendMsg"
         android:layout_alignParentTop="true"
+        android:id="@+id/cancel_action"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
-        android:id="@+id/cancel_action" />
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="50dp"
@@ -62,15 +35,50 @@
         android:layout_toLeftOf="@+id/cancel_action"
         android:layout_toStartOf="@+id/cancel_action" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        tools:text="Name"
+        android:ems="10"
+        android:linksClickable="true"
+        android:autoLink="all"
+        android:padding="15dp"
+        android:id="@+id/etTweet"
+        android:layout_below="@+id/tvUserName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="172dp"
+        android:layout_toLeftOf="@+id/tvTextCount"
+        android:layout_toStartOf="@+id/tvTextCount" />
+
+    <TextView
+        android:text="150"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTextCount"
+        android:layout_alignBottom="@+id/etTweet"
+        android:layout_toRightOf="@+id/sendMsg"
+        android:layout_toEndOf="@+id/sendMsg" />
+
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvUserName"
-        android:padding="5dp"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/tvUserName"
-        android:layout_alignEnd="@+id/tvUserName"
+        android:layout_toRightOf="@+id/ivUserImage"
+        android:layout_toEndOf="@+id/ivUserImage"
+        android:padding="5dp"
         android:id="@+id/tvScreenName" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:id="@+id/tvUserName"
+        android:layout_toRightOf="@+id/ivUserImage"
+        android:layout_toEndOf="@+id/ivUserImage"
+        android:layout_alignBottom="@+id/ivUserImage" />
 
 </RelativeLayout>

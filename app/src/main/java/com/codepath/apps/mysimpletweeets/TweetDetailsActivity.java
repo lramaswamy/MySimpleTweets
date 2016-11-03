@@ -37,8 +37,6 @@ public class TweetDetailsActivity extends AppCompatActivity{
         TextView tvRetweetCount = (TextView) findViewById(R.id.tvRetweets);
         tvRetweetCount.setText(Integer.toString(tweet.getRetweets()));
 
-        TextView favoriteCount = (TextView) findViewById(R.id.tvFavorite);
-        favoriteCount.setText(Integer.toString(tweet.getFavorites()));
 
         TextView tvRelativeTime = (TextView) findViewById(R.id.tvRelativeTime);
         tvRelativeTime.setText(tweet.getCreatedAt());

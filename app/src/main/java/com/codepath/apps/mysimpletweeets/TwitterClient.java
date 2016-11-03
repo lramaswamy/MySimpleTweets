@@ -22,18 +22,18 @@ import org.scribe.builder.api.TwitterApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "Nd5FM7u9FQHbanSsvQgnTNrOh";       // Change this
-	public static final String REST_CONSUMER_SECRET = "0hvVTboJlg766gPBvtoP7mxFP0pRpJzGZ9ZuoymurKi510P7V7"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets"; // Change this (here and in manifest)
-
-	public TwitterClient(Context context) {
-		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
-	}
+    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+    public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+    public static final String REST_CONSUMER_KEY = "Nd5FM7u9FQHbanSsvQgnTNrOh";       // Change this
+    public static final String REST_CONSUMER_SECRET = "0hvVTboJlg766gPBvtoP7mxFP0pRpJzGZ9ZuoymurKi510P7V7"; // Change this
+    public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets"; // Change this (here and in manifest)
+    public static final int TOTAL_COUNT_OF_ELEMENTS = 25;
+    public TwitterClient(Context context) {
+        super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
+    }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
+     * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)
 	 *    i.e RequestParams params = new RequestParams("foo", "bar");
 	 * 3. Define the request method and make a call to the client
@@ -41,30 +41,51 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 
-	//Gets the home timeline
-	public void getHomeTimeline(long sinceID, long maxID, int totalNumOfItems, AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("statuses/home_timeline.json");
-		RequestParams params = new RequestParams();
-		params.put("count", totalNumOfItems);
-		if(sinceID != -1)
-			params.put("since_id", sinceID);
-		if(maxID != -1)
-			params.put("max_id", maxID);
+    //Gets the home timeline
+    public void getHomeTimeline(long sinceID, long maxID, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", TOTAL_COUNT_OF_ELEMENTS);
+        if (sinceID != -1)
+            params.put("since_id", sinceID);
+        if (maxID != -1)
+            params.put("max_id", maxID);
 
-		//Execute the request for pull
-		getClient().get(apiUrl, params, handler);
-	}
-
-	public void getCurrentUserName(AsyncHttpResponseHandler handler) {
-        String apiURL = getApiUrl("account/verify_credentials.json");
-        getClient().get(apiURL, handler);
+        //Execute the request for pull
+        getClient().get(apiUrl, params, handler);
     }
 
-	public void postTweet(String composedTweet, AsyncHttpResponseHandler handler) {
-		String apiURL = getApiUrl("statuses/update.json");
-		RequestParams params = new RequestParams();
-		params.put("status", composedTweet);
-		getClient().post(apiURL, params, handler);
-	}
+    public void getCurrentUserName(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        getClient().get(apiUrl, handler);
+    }
 
+    public void postTweet(String composedTweet, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", composedTweet);
+        getClient().post(apiUrl, params, handler);
+    }
+
+    public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", TOTAL_COUNT_OF_ELEMENTS);
+        //Execute the request for pull
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", TOTAL_COUNT_OF_ELEMENTS);
+        params.put("screen_name", screenName);
+        //Execute the request for pull
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getUserInfo(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        getClient().get(apiUrl, handler);
+    }
 }

@@ -2,10 +2,13 @@ package com.codepath.apps.mysimpletweeets;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,25 @@ public class TweetCompose extends DialogFragment {
     TextView textView;
     OnTweetPass tweetPass;
     TextView tvScreenName;
+    TextView tvTextCount;
+
+    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        public void afterTextChanged(Editable s) {
+            int txtCnt = 140 - s.length();
+            if(txtCnt < 0)
+                tvTextCount.setTextColor(Color.RED);
+            else
+                tvTextCount.setTextColor(Color.BLUE);
+            tvTextCount.setText(String.valueOf(txtCnt));
+        }
+    };
 
     public void setProfileURL(String profileURL) {
         this.profileURL = profileURL;
@@ -89,6 +111,8 @@ public class TweetCompose extends DialogFragment {
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        etCompose.addTextChangedListener(mTextEditorWatcher);
+
         ImageView imageView = (ImageView) view.findViewById(R.id.ivUserImage);
         Glide.with(view.getContext())
                 .load(profileURL)
@@ -110,19 +134,10 @@ public class TweetCompose extends DialogFragment {
                 dismiss();
             }
         });
+
+        tvTextCount = (TextView) view.findViewById(R.id.tvTextCount);
     }
 
-    @Override
-    public void onResume() {
-        // Get existing layout params for the window
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-        // Assign window properties to fill the parent
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-        // Call super onResume after sizing
-        super.onResume();
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -131,6 +146,6 @@ public class TweetCompose extends DialogFragment {
     }
 
     public interface OnTweetPass {
-        public void OnTweetPass(String tweetData);
+        void OnTweetPass(String tweetData);
     }
 }

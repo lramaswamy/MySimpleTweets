@@ -3,13 +3,11 @@ package com.codepath.apps.mysimpletweeets.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweeets.R;
@@ -37,7 +35,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        Log.d("Debug", "Here inside onCreateView");
 
         //Inflate the individual
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
@@ -50,7 +47,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         //Get the item
         Tweet tweet = mTweets.get(position);
-        Log.d("Debug", "Here inside onBind");
         holder.imageView.setImageResource(android.R.color.transparent);
         holder.tvUserName.setText(tweet.getUser().getName());
         holder.tvTweetBody.setText(tweet.getBody());
@@ -62,7 +58,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
     @Override
     public int getItemCount() {
-        Log.d("Debug", Integer.toString(mTweets.size()));
         return mTweets.size();
     }
 
@@ -88,7 +83,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
         @Override
         public void onClick(View itemView) {
-            Toast.makeText(mContext, "Item clicked:", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext, TweetDetailsActivity.class);
             intent.putExtra("tweet", Parcels.wrap(mTweets.get(getAdapterPosition())));
             mContext.startActivity(intent);

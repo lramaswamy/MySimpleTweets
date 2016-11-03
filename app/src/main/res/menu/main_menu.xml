@@ -8,4 +8,12 @@
         android:onClick="composeNewTweet"
         android:title="Compose">
     </item>
+
+    <item
+        android:id="@+id/miProfile"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="ifRoom"
+        android:onClick="onProfileView"
+        android:title="Profile">
+    </item>
 </menu>
