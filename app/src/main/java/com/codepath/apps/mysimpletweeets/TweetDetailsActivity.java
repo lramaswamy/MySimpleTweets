@@ -55,6 +55,4 @@ public class TweetDetailsActivity extends AppCompatActivity{
         TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         tvScreenName.setText(tweet.getUser().getScreenName());
     }
-
-
 }

@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.mysimpletweeets.ProfileActivity;
 import com.codepath.apps.mysimpletweeets.R;
 import com.codepath.apps.mysimpletweeets.TweetDetailsActivity;
 import com.codepath.apps.mysimpletweeets.models.Tweet;
@@ -72,12 +74,19 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
 
         public ViewHolder(Context context, View view, List<Tweet> tweets) {
             super(view);
+            mTweets = tweets;
+            mContext = context;
             imageView = (ImageView) view.findViewById(R.id.ivProfileImage);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchProfilepage(v, mTweets.get(getAdapterPosition()));
+                }
+            });
             tvUserName = (TextView) view.findViewById(R.id.tvUserName);
             tvTweetBody = (LinkifiedTextView) view.findViewById(R.id.tvTweetBody);
             tvCreatedAt = (TextView) view.findViewById(R.id.tvRelativeTime);
-            mTweets = tweets;
-            mContext = context;
+
             view.setOnClickListener(this);
         }
 
@@ -87,5 +96,14 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
             intent.putExtra("tweet", Parcels.wrap(mTweets.get(getAdapterPosition())));
             mContext.startActivity(intent);
         }
+
+        public void launchProfilepage(View view, Tweet tweet) {
+            Toast.makeText(view.getContext(), "see profile", Toast.LENGTH_SHORT).show();
+            //Launch the profile view
+            Intent intent = new Intent(view.getContext(), ProfileActivity.class);
+            intent.putExtra("screenName", tweet.getUser().getScreenName() );
+            view.getContext().startActivity(intent);
+        }
     }
+
 }

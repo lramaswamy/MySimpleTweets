@@ -21,7 +21,7 @@ public class UserTimelineFragment extends TweetsListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populateTimeline();
+        populateTimeline(1, -1);
     }
 
     public static UserTimelineFragment newInstance(String screenName) {
@@ -35,12 +35,14 @@ public class UserTimelineFragment extends TweetsListFragment {
 
     //Sends an API request to get the timeline JSON
     //Fill in the listview by creating the individual tweet objects from the big JSON
-    void populateTimeline() {
+    void populateTimeline(long sinceID, final long maxID) {
         String screenName = getArguments().getString("screenName");
-        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
+        client.getUserTimeline(sinceID, maxID, screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 List<Tweet> moreTweets = Tweet.fromJSONArray(json);
+                if((maxID != -1) && getTweetsList().size() > 0) //if atleast one result is there, then remove the first one since it could be a duplicate.
+                    moreTweets.remove(0);
                 addAll(moreTweets);
             }
 
@@ -50,16 +52,4 @@ public class UserTimelineFragment extends TweetsListFragment {
             }
         });
     }
-
-    public void getTweetsSince() {
-        sinceID = 0;
-        populateTimeline();
-    }
-
-    public void getTweetsBeyond()
-    {
-        maxID = 0;
-        populateTimeline();
-    }
-
 }

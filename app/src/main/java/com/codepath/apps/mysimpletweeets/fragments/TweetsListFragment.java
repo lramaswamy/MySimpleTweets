@@ -75,18 +75,25 @@ public abstract class TweetsListFragment extends Fragment {
     }
 
     public void addAll(List<Tweet> tweet) {
-        if(sinceID == 0 && maxID == 0) {
-            tweets.clear();
-            tweets.addAll(tweet);
-        } else {
-            if (maxID != -1 && maxID != 0)
-                tweets.addAll(tweets.size(), tweet);
-            if (sinceID != -1 && sinceID !=0)
-                tweets.addAll(0, tweet);
-        }
+        if (maxID != -1)
+            tweets.addAll(tweets.size(), tweet);
+        else if (sinceID != -1)
+            tweets.addAll(0, tweet);
         adapter.notifyDataSetChanged();
     }
 
-    public abstract void getTweetsSince();
-    public abstract void getTweetsBeyond();
+    public void getTweetsSince() {
+        sinceID = getTweetsList().get(0).getUid();
+        maxID = -1;
+        populateTimeline(sinceID, -1);
+    }
+
+    public void getTweetsBeyond() {
+        maxID = getTweetsList().get(getTweetsList().size() - 1).getUid();
+        sinceID = -1;
+        populateTimeline(-1, maxID);
+    }
+
+    void populateTimeline(long sinceID, final long maxID) {
+    }
 }

@@ -32,6 +32,8 @@ public class HomeTimelineFragment extends TweetsListFragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 List<Tweet> moreTweets = Tweet.fromJSONArray(json);
+                if(maxID != -1 && getTweetsList().size() > 0) //if atleast one result is there, then remove the first one since it could be a duplicate.
+                    moreTweets.remove(0);
                 addAll(moreTweets);
             }
 
@@ -40,17 +42,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
-    }
-
-    public void getTweetsSince() {
-        sinceID = getTweetsList().get(0).getUid();
-        populateTimeline(sinceID, -1);
-    }
-
-    public void getTweetsBeyond()
-    {
-        maxID = getTweetsList().get(getTweetsList().size() - 1).getUid();
-        populateTimeline(-1, maxID);
     }
 
 }
