@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         client = TwitterApplication.getRestClient();
-        String screenName = getIntent().getStringExtra("screenName");
+        final String screenName = getIntent().getStringExtra("screenName");
         client.getCurrentUserName(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -48,6 +48,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
+                toolbar = (Toolbar) findViewById(R.id.profileToolbar);
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setTitle(user.getScreenName());
                 populateProfileHeader(user);
             }
         });
@@ -66,7 +69,5 @@ public class ProfileActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(user.getProfileImageUrl())
                 .into(ivProfileImage);
-        getSupportActionBar().setTitle(user.getScreenName());
-
     }
 }
