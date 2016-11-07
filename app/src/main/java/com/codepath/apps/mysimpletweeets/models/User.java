@@ -108,8 +108,4 @@ public class User {
         }
         return user;
     }
-
-    public static void postTweet(String composedTweet) {
-
-    }
 }

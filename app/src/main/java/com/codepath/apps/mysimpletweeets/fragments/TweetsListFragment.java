@@ -38,6 +38,8 @@ public abstract class TweetsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tweets_layout, parent, false);
+        // Inflate the footer
+        View footer = inflater.inflate(R.layout.footer_progress, null);
         rvTweets = (RecyclerView) view.findViewById(R.id.rvTweets);
         rvTweets.setAdapter(adapter);
         linearLayoutManager = new LinearLayoutManager(getActivity());

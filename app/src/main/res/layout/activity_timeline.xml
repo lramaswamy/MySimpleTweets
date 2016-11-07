@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorAccent"
         app:titleTextColor="@android:color/holo_blue_light"
-        android:id="@+id/toolbar">
+        android:id="@+id/profileToolbar">
     </android.support.v7.widget.Toolbar>
+
 
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
@@ -21,7 +22,7 @@
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/profileToolbar"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"

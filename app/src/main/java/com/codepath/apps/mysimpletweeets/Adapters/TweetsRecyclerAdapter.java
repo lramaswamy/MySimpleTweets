@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweeets.ProfileActivity;
@@ -98,10 +97,10 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetsRecyclerAd
         }
 
         public void launchProfilepage(View view, Tweet tweet) {
-            Toast.makeText(view.getContext(), "see profile", Toast.LENGTH_SHORT).show();
             //Launch the profile view
             Intent intent = new Intent(view.getContext(), ProfileActivity.class);
             intent.putExtra("screenName", tweet.getUser().getScreenName() );
+            intent.putExtra("userId", tweet.getUid());
             view.getContext().startActivity(intent);
         }
     }

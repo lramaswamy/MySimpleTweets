@@ -10,13 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.mysimpletweeets.ProfileActivity">
 
-    <android.support.v7.widget.Toolbar
+    <!-- Load the toolbar here -->
+    <include
+        layout="@layout/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorAccent"
-        app:titleTextColor="@android:color/holo_blue_light"
-        android:id="@+id/profileToolbar">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,22 +40,13 @@
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvScreenName"
+            android:id="@+id/tvTagline"
             android:layout_marginLeft="10dp"
+            android:textSize="10dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_toRightOf="@+id/ivProfileImage"
             android:layout_toEndOf="@+id/ivProfileImage"
             android:layout_alignTop="@+id/ivProfileImage" />
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvTagline"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/tvScreenName"
-            android:layout_alignStart="@+id/tvScreenName"
-            android:layout_marginBottom="15dp" />
 
 
     </RelativeLayout>

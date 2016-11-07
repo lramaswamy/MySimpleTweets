@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@layout/toolbar_main"
         android:id="@+id/rvTweets" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

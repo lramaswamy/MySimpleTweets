@@ -34,7 +34,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetCompose.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         client = (TwitterClient) TwitterClient.getInstance(TwitterClient.class, this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -95,7 +95,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetCompose.
     public void onProfileView(MenuItem item) {
         //Launch the profile view
         Intent intent = new Intent(this, ProfileActivity.class);
-        //intent.putExtra("screenName", null );
         startActivity(intent);
 
     }

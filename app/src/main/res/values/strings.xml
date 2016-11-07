@@ -4,4 +4,5 @@
     <string name="app_name">Simple Tweeets</string>
     <string name="login_label">Connect with Twitter</string>
     <string name="title_activity_timeline"> Home Timeline </string>
+    <string name="snackbar.text">No Internet Connection!!!</string>
 </resources>
